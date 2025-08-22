@@ -9,24 +9,24 @@ st.markdown(
         background-color: #f0f2f6;
         padding: 20px;
     }
-    .stHeader {
+    .st-header {
         color: #1e3a8a;
         font-size: 24px;
         font-weight: bold;
         margin-bottom: 10px;
     }
-    .stSubheader {
+    .st-subheader {
         color: #4b5563;
         font-size: 20px;
         margin-top: 15px;
     }
-    .stTable {
+    .st-table {
         background-color: white;
         border-radius: 5px;
         padding: 10px;
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     }
-    .stDownloadButton {
+    .st-download-button {
         background-color: #3b82f6;
         color: white;
         padding: 10px 20px;
@@ -35,7 +35,7 @@ st.markdown(
         text-decoration: none;
         display: inline-block;
     }
-    .stDownloadButton:hover {
+    .st-download-button:hover {
         background-color: #2563eb;
     }
     </style>
@@ -47,7 +47,7 @@ st.markdown(
 st.title("Commercial Pool GPM Calculator")
 
 # Inputs from the user in columns for better layout
-st.header("Input Data", div="stHeader")
+st.markdown('<div class="st-header">Input Data</div>', unsafe_allow_html=True)
 col1, col2 = st.columns(2)
 
 with col1:
@@ -90,10 +90,10 @@ total_area = pool_deep_area + sun_shelf_area + zero_entry_area
 total_volume = volume_deep + volume_sun + volume_zero
 
 # Display results in tables
-st.header("Results", div="stHeader")
+st.markdown('<div class="st-header">Results</div>', unsafe_allow_html=True)
 
 # Deep Pool Table
-st.subheader("Pool Size Calculator Deep End", div="stSubheader")
+st.markdown('<div class="st-subheader">Pool Size Calculator Deep End</div>', unsafe_allow_html=True)
 deep_data = {
     "": ["", "", f"{pool_deep_area} AREA", f"{cubic_feet_deep} CUBIC FEET", f"{volume_deep} VOLUME", ""],
     "": ["", "", "x", "x", "/", ""],
@@ -101,12 +101,12 @@ deep_data = {
     "": ["", "", "", "", "=", f"{flow_rate_deep} FLOW RATE"]
 }
 df_deep = pd.DataFrame(deep_data)
-st.markdown('<div class="stTable">', unsafe_allow_html=True)
+st.markdown('<div class="st-table">', unsafe_allow_html=True)
 st.table(df_deep)
 st.markdown('</div>', unsafe_allow_html=True)
 
 # Sun Shelf Table
-st.subheader("Sun Shelf Calculator #1", div="stSubheader")
+st.markdown('<div class="st-subheader">Sun Shelf Calculator #1</div>', unsafe_allow_html=True)
 sun_data = {
     "": ["", f"{sun_shelf_area} SUN SHELVES AREA", f"{cubic_feet_sun} CUBIC FEET", f"{volume_sun} VOLUME", ""],
     "": ["", "x", "x", "/", ""],
@@ -114,12 +114,12 @@ sun_data = {
     "": ["", "", "", "=", f"{flow_rate_sun} MIN FLOW RATE"]
 }
 df_sun = pd.DataFrame(sun_data)
-st.markdown('<div class="stTable">', unsafe_allow_html=True)
+st.markdown('<div class="st-table">', unsafe_allow_html=True)
 st.table(df_sun)
 st.markdown('</div>', unsafe_allow_html=True)
 
 # Zero Entry Table
-st.subheader("Zero Entry Calculator", div="stSubheader")
+st.markdown('<div class="st-subheader">Zero Entry Calculator</div>', unsafe_allow_html=True)
 zero_data = {
     "": ["", f"{zero_entry_area} ZERO ENTRY AREA", f"{cubic_feet_zero} CUBIC FEET", f"{volume_zero} VOLUME", ""],
     "": ["", "x", "x", "/", ""],
@@ -127,12 +127,12 @@ zero_data = {
     "": ["", "", "", "=", f"{flow_rate_zero} MIN FLOW RATE"]
 }
 df_zero = pd.DataFrame(zero_data)
-st.markdown('<div class="stTable">', unsafe_allow_html=True)
+st.markdown('<div class="st-table">', unsafe_allow_html=True)
 st.table(df_zero)
 st.markdown('</div>', unsafe_allow_html=True)
 
 # Total Table
-st.subheader("Total", div="stSubheader")
+st.markdown('<div class="st-subheader">Total</div>', unsafe_allow_html=True)
 total_data = {
     "TOTAL FLOW RATE": [f"{total_flow_rate}", "MIN FLOW RATE REQ'D"],
     "TOTAL AREA PROVIDED": [f"{total_area}", "MIN AREA REQUIRED"],
@@ -142,7 +142,7 @@ total_data = {
     "TOTAL VOLUME": [f"{total_volume}", ""]
 }
 df_total = pd.DataFrame(total_data)
-st.markdown('<div class="stTable">', unsafe_allow_html=True)
+st.markdown('<div class="st-table">', unsafe_allow_html=True)
 st.table(df_total)
 st.markdown('</div>', unsafe_allow_html=True)
 
@@ -170,7 +170,7 @@ csv_data = {
 }
 df_csv = pd.DataFrame(csv_data)
 csv = df_csv.to_csv(index=False)
-st.markdown('<div class="stDownloadButton">', unsafe_allow_html=True)
+st.markdown('<div class="st-download-button">', unsafe_allow_html=True)
 st.download_button(
     label="Download Report as CSV",
     data=csv,
