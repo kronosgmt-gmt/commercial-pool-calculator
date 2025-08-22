@@ -84,6 +84,12 @@ cubic_feet_deep = pool_deep_area * average_depth_deep
 volume_deep = cubic_feet_deep * gallons_per_cubic
 flow_rate_deep = volume_deep / deep_turnover
 
+# Debug output for Deep Pool
+st.write("**Debug - Deep Pool Calculation:**")
+st.write(f"Cubic Feet: {cubic_feet_deep}")
+st.write(f"Volume (Gallons): {volume_deep}")
+st.write(f"Flow Rate (GPM): {flow_rate_deep}")
+
 # Calculations for Sun Shelf
 cubic_feet_sun = sun_shelf_area * average_depth_sun
 volume_sun = cubic_feet_sun * gallons_per_cubic
