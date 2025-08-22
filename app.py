@@ -86,8 +86,8 @@ with st.sidebar:
         average_depth_sun = st.number_input("Avg Depth Sun Shelf (ft)", min_value=0.0, value=0.0)
         average_depth_zero = st.number_input("Avg Depth Zero Entry (ft)", min_value=0.0, value=0.0)
         deep_turnover = st.number_input("Deep Turnover (minutes)", min_value=0, value=0)
-        sun_turnover = st.number_input("Sun Shelf Turnover (minutes)", min_value=0, value=0)
-        zero_entry_turnover = st.number_input("Zero Entry Turnover (minutes)", min_value=0, value=0)
+        sun_turnover = st.number_input("Sun Shelf Turnover (minutes)", min_value=0, value=60)
+        zero_entry_turnover = st.number_input("Zero Entry Turnover (minutes)", min_value=0, value=120)
 
 # Fixed conversion factors (moved to calculations)
 units_per_living = 4.5
