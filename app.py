@@ -1,33 +1,38 @@
 import streamlit as st
 import pandas as pd
 
-# Custom CSS for better appearance
+# Custom CSS for dark mode appearance
 st.markdown(
     """
     <style>
     .stApp {
-        background-color: #f0f2f6;
+        background-color: #1a1a1a;
+        color: #e0e0e0;
         padding: 20px;
     }
     .st-header {
-        color: #1e3a8a;
+        color: #a3bffa;
         font-size: 24px;
         font-weight: bold;
         margin-bottom: 10px;
     }
     .st-subheader {
-        color: #4b5563;
+        color: #b0b0b0;
         font-size: 20px;
         margin-top: 15px;
     }
     .st-table {
-        background-color: white;
+        background-color: #2d2d2d;
         border-radius: 5px;
         padding: 10px;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        color: #e0e0e0;
+    }
+    .st-table th, .st-table td {
+        border-color: #444444;
     }
     .st-download-button {
-        background-color: #3b82f6;
+        background-color: #4dabf7;
         color: white;
         padding: 10px 20px;
         border-radius: 5px;
@@ -36,7 +41,12 @@ st.markdown(
         display: inline-block;
     }
     .st-download-button:hover {
-        background-color: #2563eb;
+        background-color: #339af0;
+    }
+    input, select, textarea {
+        background-color: #333333;
+        color: #e0e0e0;
+        border: 1px solid #555555;
     }
     </style>
     """,
