@@ -76,15 +76,21 @@ with st.sidebar:
     col1, col2 = st.columns(2)
     
     with col1:
-        unit_count = st.number_input("Unit Count", min_value=0, value=0)
         pool_deep_area = st.number_input("Pool Deep Area (sq ft)", min_value=0.0, value=0.0)
         sun_shelf_area = st.number_input("Total Sun Shelf Area (sq ft)", min_value=0.0, value=0.0)
         zero_entry_area = st.number_input("Zero Entry Area (sq ft)", min_value=0.0, value=0.0)
+        
+        st.markdown("""---""")
+        
+        unit_count = st.number_input("Unit Count", min_value=0, value=0)
 
     with col2:
         average_depth_deep = st.number_input("Avg Depth Deep Pool (ft)", min_value=0.0, value=0.0)
         average_depth_sun = st.number_input("Avg Depth Sun Shelf (ft)", min_value=0.0, value=0.0)
         average_depth_zero = st.number_input("Avg Depth Zero Entry (ft)", min_value=0.0, value=0.0)
+
+        st.markdown("""---""")
+        
         deep_turnover = st.number_input("Deep Turnover (minutes)", min_value=0, value=0)
         sun_turnover = st.number_input("Sun Shelf Turnover (minutes)", min_value=0, value=60)
         zero_entry_turnover = st.number_input("Zero Entry Turnover (minutes)", min_value=0, value=120)
