@@ -1,61 +1,99 @@
 import streamlit as st
 import pandas as pd
-from io import StringIO
 
 # Title of the application
 st.title("Commercial Pool GPM Calculator")
 
 # Inputs from the user
 st.header("Input Data")
-unit_count = st.number_input("Unit Count", min_value=0, value=264)
-pool_deep_area = st.number_input("Pool Deep Area (square feet)", min_value=0.0, value=1224.0)
-sun_shelf_1 = st.number_input("Sun Shelf 1 (square feet)", min_value=0.0, value=0.0)
-sun_shelf_2 = st.number_input("Sun Shelf 2 (square feet)", min_value=0.0, value=0.0)
-sun_shelf_3 = st.number_input("Sun Shelf 3 (square feet)", min_value=0.0, value=0.0)
-sun_shelf_4 = st.number_input("Sun Shelf 4 (square feet)", min_value=0.0, value=0.0)
-zero_entry = st.number_input("Zero Entry (square feet)", min_value=0.0, value=0.0)
+unit_count = st.number_input("Unit Count", min_value=0, value=242)
+pool_deep_area = st.number_input("Pool Deep Area (square feet)", min_value=0.0, value=2067.0)
+sun_shelf_area = st.number_input("Total Sun Shelf Area (square feet)", min_value=0.0, value=299.0)
 units_per_living = st.number_input("Units per Living", min_value=0.0, value=4.5)
 gpm_factor = st.number_input("GPM Factor", min_value=0.0, value=0.75)
-average_depth = st.number_input("Average Depth (feet)", min_value=0.0, value=4.0)
+average_depth_deep = st.number_input("Average Depth Deep Pool (feet)", min_value=0.0, value=4.0)
+average_depth_sun = st.number_input("Average Depth Sun Shelf (feet)", min_value=0.0, value=0.75)
 gallons_per_cubic = st.number_input("Gallons per Cubic Foot", min_value=0.0, value=7.48)
-design_turnover = st.number_input("Design Turnover (minutes)", min_value=0, value=183)
 
-# Calculate total area
-total_area = pool_deep_area + sun_shelf_1 + sun_shelf_2 + sun_shelf_3 + sun_shelf_4 + zero_entry
+# Fixed turnover times
+deep_turnover = st.number_input("deep turnover", min_value=0, value=180)  # minutes for deep pool
+sun_turnover = 60    # minutes for sun shelves
+zero_entry_turnover = 120 # minutes for zero entries
 
-# Calculations
+# Calculations for Deep Pool
 min_area_required = unit_count * units_per_living
 min_flow_rate = unit_count * gpm_factor
-cubic_feet = total_area * average_depth
-volume = cubic_feet * gallons_per_cubic
-flow_rate = volume / design_turnover
+cubic_feet_deep = pool_deep_area * average_depth_deep
+volume_deep = cubic_feet_deep * gallons_per_cubic
+flow_rate_deep = volume_deep / deep_turnover
 
-# Display results
+# Calculations for Sun Shelf
+cubic_feet_sun = sun_shelf_area * average_depth_sun
+volume_sun = cubic_feet_sun * gallons_per_cubic
+flow_rate_sun = volume_sun / sun_turnover
+
+# Total calculations
+total_flow_rate = flow_rate_deep + flow_rate_sun
+total_area = pool_deep_area + sun_shelf_area
+total_volume = volume_deep + volume_sun
+
+# Display results in tables
 st.header("Results")
-st.write(f"Minimum Area Required: {min_area_required} square feet")
-st.write(f"Minimum Flow Rate: {min_flow_rate} GPM")
-st.write(f"Total Area: {total_area} square feet")
-st.write(f"Volume in Cubic Feet: {cubic_feet}")
-st.write(f"Total Volume: {volume} gallons")
-st.write(f"Flow Rate: {flow_rate} GPM")
 
-# Create table for download
-data = {
-    "Project Name": ["Altera Palmetto"],
+# Deep Pool Table
+st.subheader("Pool Size Calculator Deep End")
+deep_data = {
+    "": ["", "", f"{pool_deep_area} AREA", f"{cubic_feet_deep} CUBIC FEET", f"{volume_deep} VOLUME", ""],
+    "": ["", "", "x", "x", "/", ""],
+    "": ["", "", f"{average_depth_deep} AVERAGE DEPTH", f"{gallons_per_cubic} GALLONS PER CUBIC FEET", f"{deep_turnover} DESIGN TURNOVER IN MINUTES", ""],
+    "": ["", "", "", "", "=", f"{flow_rate_deep} FLOW RATE"]
+}
+df_deep = pd.DataFrame(deep_data)
+st.table(df_deep)
+
+# Sun Shelf Table
+st.subheader("Sun Shelf Calculator #1")
+sun_data = {
+    "": ["", f"{sun_shelf_area} SUN SHELVES AREA", f"{cubic_feet_sun} CUBIC FEET", f"{volume_sun} VOLUME", ""],
+    "": ["", "x", "x", "/", ""],
+    "": ["", f"{average_depth_sun} AVERAGE DEPTH", f"{gallons_per_cubic} GALLONS PER CUBIC FEET", f"{sun_turnover} TURNOVER IN MINUTES", ""],
+    "": ["", "", "", "=", f"{flow_rate_sun} MIN FLOW RATE"]
+}
+df_sun = pd.DataFrame(sun_data)
+st.table(df_sun)
+
+# Total Table
+st.subheader("Total")
+total_data = {
+    "TOTAL FLOW RATE": [f"{total_flow_rate}", "MIN FLOW RATE REQ'D"],
+    "TOTAL AREA PROVIDED": [f"{total_area}", "MIN AREA REQUIRED"],
+    "VOLUME POOL": [f"{volume_deep}", ""],
+    "VOLUME SUNSHELF 1": [f"{volume_sun}", ""],
+    "TOTAL VOLUME": [f"{total_volume}", ""]
+}
+df_total = pd.DataFrame(total_data)
+st.table(df_total)
+
+# Download button
+csv_data = {
+    "Project Name": ["Summerlit"],
     "Number of Units": [unit_count],
     f"{unit_count} Unit Count x {units_per_living} Units per Living =": [min_area_required],
     f"{unit_count} Unit Count x {gpm_factor} GPM Factor =": [min_flow_rate],
-    f"{pool_deep_area} Pool Deep Area x {average_depth} Average Depth =": [cubic_feet],
-    f"{cubic_feet} Cubic Feet x {gallons_per_cubic} Gallons per Cubic =": [volume],
-    f"{volume} Volume / {design_turnover} Design Turnover =": [flow_rate],
-    "Total Flow Rate": [200.0],  # Example value, adjust as needed
+    f"{pool_deep_area} Pool Deep Area x {average_depth_deep} Average Depth =": [cubic_feet_deep],
+    f"{cubic_feet_deep} Cubic Feet x {gallons_per_cubic} Gallons per Cubic =": [volume_deep],
+    f"{volume_deep} Volume / {deep_turnover} Design Turnover =": [flow_rate_deep],
+    f"{sun_shelf_area} Sun Shelves Area x {average_depth_sun} Average Depth =": [cubic_feet_sun],
+    f"{cubic_feet_sun} Cubic Feet x {gallons_per_cubic} Gallons per Cubic =": [volume_sun],
+    f"{volume_sun} Volume / {sun_turnover} Turnover =": [flow_rate_sun],
+    "Total Flow Rate": [total_flow_rate],
     "Total Area Provided": [total_area],
-    "Provided Pool Volume": [volume]
+    "Volume Pool": [volume_deep],
+    "Volume Sun Shelf": [volume_sun],
+    "Total Volume": [total_volume]
 }
-df = pd.DataFrame(data)
-
-# Download button
-csv = df.to_csv(index=False)
+df_csv = pd.DataFrame(csv_data)
+csv = df_csv.to_csv(index=False)
 st.download_button(
     label="Download Report as CSV",
     data=csv,
