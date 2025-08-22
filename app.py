@@ -76,24 +76,29 @@ with st.sidebar:
     col1, col2 = st.columns(2)
     
     with col1:
-        unit_count = st.number_input("Unit Count", min_value=0, value=242)
-        pool_deep_area = st.number_input("Pool Deep Area (sq ft)", min_value=0.0, value=2067.0)
-        sun_shelf_area = st.number_input("Total Sun Shelf Area (sq ft)", min_value=0.0, value=299.0)
-        zero_entry_area = st.number_input("Zero Entry Area (sq ft)", min_value=0.0, value=0.0)
+        unit_count = st.number_input("Unit Count", min_value=0)
+        pool_deep_area = st.number_input("Pool Deep Area (sq ft)", min_value=0.0)
+        sun_shelf_area = st.number_input("Total Sun Shelf Area (sq ft)", min_value=0.0)
+        zero_entry_area = st.number_input("Zero Entry Area (sq ft)", min_value=0.0)
 
     with col2:
-        units_per_living = st.number_input("Units per Living", min_value=0.0, value=4.5)
-        gpm_factor = st.number_input("GPM Factor", min_value=0.0, value=0.75)
+
         average_depth_deep = st.number_input("Avg Depth Deep Pool (ft)", min_value=0.0, value=4.0)
         average_depth_sun = st.number_input("Avg Depth Sun Shelf (ft)", min_value=0.0, value=0.75)
         average_depth_zero = st.number_input("Avg Depth Zero Entry (ft)", min_value=0.0, value=0.5)
-        gallons_per_cubic = st.number_input("Gallons per Cubic Foot", min_value=0.0, value=7.48)
+        
         deep_turnover = st.number_input("Deep Turnover (minutes)", min_value=0, value=180)
         sun_turnover = st.number_input("Sun Shelf Turnover (minutes)", min_value=0, value=60)
         zero_entry_turnover = st.number_input("Zero Entry Turnover (minutes)", min_value=0, value=120)
 
 # Tabs for different sections
 tab1, tab2, tab3 = st.tabs(["Input Data", "Results", "Reports"])
+
+ #Factores de conversion       
+
+units_per_living = 4.5 #esto debe ir en los calculos no en data
+gpm_factor = 0.75 #esto debe ir en los calculos no en data
+gallons_per_cubic = 7.48 #esto debe ir en los calculos no en data
 
 with tab1:
     st.header("Input Data")
